@@ -34,7 +34,7 @@ Source:         %{gosource}
 
 %prep
 %goprep -A
-%autopatch -p1
+%autopatch
 
 BuildRequires: golang(github.com/rogpeppe/go-internal)
 BuildRequires: golang(golang.org/x/sys)
