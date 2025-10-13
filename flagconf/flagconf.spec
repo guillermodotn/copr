@@ -36,10 +36,9 @@ Source:         %{gosource}
 %goprep -A
 %autopatch -p1
 
-%if %{without bootstrap}
-%generate_buildrequires
-%go_generate_buildrequires
-%endif
+BuildRequires: golang(github.com/rogpeppe/go-internal)
+BuildRequires: golang(golang.org/x/sys)
+BuildRequires: golang(golang.org/x/tools)
 
 %install
 %gopkginstall
