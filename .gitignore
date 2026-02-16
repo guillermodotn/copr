@@ -1,0 +1,30 @@
+# Build artifacts
+*.src.rpm
+*.rpm
+
+# Source tarballs downloaded from PyPI/upstream
+*.tar.gz
+*.tar.bz2
+*.tar.xz
+*.zip
+
+# Mock build output directories
+results_*/
+
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.pytest_cache/
+
+# Editor/IDE files
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
