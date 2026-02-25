@@ -8,7 +8,6 @@ URL:            https://github.com/github/cmark-gfm
 Source0:        %{url}/archive/%{version}/%{name}-%{version}.tar.gz
 
 BuildRequires:  cmake >= 3.0
-BuildRequires:  gcc
 BuildRequires:  gcc-c++
 BuildRequires:  make
 
