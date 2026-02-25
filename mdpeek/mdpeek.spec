@@ -5,7 +5,7 @@ Summary:        Lightweight CLI markdown previewer with live reload
 
 License:        GPL-3.0-or-later
 URL:            https://github.com/guillermodotn/mdpeek
-Source0:        %%{url}/archive/%{version}/%{name}-%{version}.tar.gz
+Source0:        %{url}/archive/%{version}/%{name}-%{version}.tar.gz
 
 BuildRequires:  cmake >= 3.16
 BuildRequires:  gcc
