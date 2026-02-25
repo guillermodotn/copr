@@ -8,6 +8,7 @@ URL:            https://github.com/github/cmark-gfm
 Source0:        %{url}/archive/%{version}/%{name}-%{version}.tar.gz
 
 BuildRequires:  cmake >= 3.0
+BuildRequires:  gcc
 BuildRequires:  gcc-c++
 BuildRequires:  make
 
@@ -74,5 +75,5 @@ applications that use cmark-gfm.
 %{_mandir}/man3/cmark-gfm.3*
 
 %changelog
-* Wed Feb 25 2026 gleiro - 0.29.0.gfm.13-1
+* Wed Feb 25 2026 guillermodotn - 0.29.0.gfm.13-1
 - Initial package
