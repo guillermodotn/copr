@@ -1,5 +1,5 @@
 Name:           mdpeek
-Version:        0.1.0
+Version:        0.2.0
 Release:        1%{?dist}
 Summary:        Lightweight CLI markdown previewer with live reload
 
@@ -11,10 +11,12 @@ BuildRequires:  cmake >= 3.16
 BuildRequires:  gcc
 BuildRequires:  make
 BuildRequires:  pkgconfig(gtk4)
+BuildRequires:  pkgconfig(libadwaita-1)
 BuildRequires:  pkgconfig(webkitgtk-6.0)
 BuildRequires:  pkgconfig(libcmark-gfm)
 
 Requires:       gtk4
+Requires:       libadwaita
 Requires:       webkitgtk6.0
 Requires:       cmark-gfm-libs
 
@@ -41,5 +43,13 @@ WebKitGTK, and scroll position preservation across reloads.
 %{_bindir}/mdpeek
 
 %changelog
+
+* Thu Mar 12 2026 guillermodotn - 0.2.0-1
+- Render Mermaid diagrams in fenced code blocks via Mermaid.js
+- Redirect stderr to /dev/null to silence GTK/WebKit/Mesa noise
+- Open clicked links in the default browser
+- Switch to libadwaita for system theme integration and add Escape to close
+- Update COPR badge
+
 * Wed Feb 25 2026 guillermodotn - 0.1.0-1
 - Initial package
