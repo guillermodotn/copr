@@ -2,7 +2,7 @@
 %global extdir      %{_datadir}/gnome-shell/extensions/%{uuid}
 
 Name:           gnome-shell-extension-lookaway
-Version:        1.0.0
+Version:        1.0.1
 Release:        1%{?dist}
 Summary:        GNOME Shell extension for eye strain prevention using the 20/20/20 rule
 
@@ -59,6 +59,9 @@ install -p -m 0644 schemas/gschemas.compiled \
 
 
 %changelog
+* Mon Mar 23 2026 guillermodotn - 1.0.1-1
+- Include shell version 49
+
 * Mon Mar 23 2026 guillermodotn - 1.0.0-1
 - Initial RPM package
 - 20/20/20 rule countdown timer in the GNOME top bar
