@@ -28,7 +28,7 @@ a preferences dialog.
 
 
 %prep
-%autosetup -n lookaway-v%{version}
+%autosetup -n lookaway-%{version}
 
 
 %build
