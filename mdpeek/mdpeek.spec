@@ -1,5 +1,5 @@
 Name:           mdpeek
-Version:        0.2.0
+Version:        0.2.1
 Release:        1%{?dist}
 Summary:        Lightweight CLI markdown previewer with live reload
 
@@ -43,6 +43,11 @@ WebKitGTK, and scroll position preservation across reloads.
 %{_bindir}/mdpeek
 
 %changelog
+* Thu Apr 17 2026 guillermodotn - 0.2.1-1
+- Fix local image loading in the viewer
+- Intercept right-click reload to re-render markdown and preserve scroll
+  position across all reloads
+- Update README with screenshot, full feature list, and dependency graph
 
 * Thu Mar 12 2026 guillermodotn - 0.2.0-1
 - Render Mermaid diagrams in fenced code blocks via Mermaid.js
