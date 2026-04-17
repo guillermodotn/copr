@@ -26,7 +26,7 @@ BuildRequires: pandoc-cli
 BuildRequires: pixman-devel
 BuildRequires: pkg-config
 BuildRequires: wayland-protocols-devel
-BuildRequires: zig
+BuildRequires: zig >= 0.15.2
 BuildRequires: zlib-ng-devel
 
 
@@ -100,6 +100,11 @@ DESTDIR=%{buildroot} zig build \
 %{_prefix}/share/metainfo/com.mitchellh.ghostty.metainfo.xml
 %{_prefix}/share/systemd/user/app-com.mitchellh.ghostty.service
 
+%{_includedir}/ghostty
+%{_prefix}/lib/libghostty-vt.so
+%{_prefix}/lib/libghostty-vt.so.0
+%{_prefix}/lib/libghostty-vt.so.0.*
+%{_prefix}/share/pkgconfig/libghostty-vt.pc
 %{_prefix}/share/terminfo/x/xterm-ghostty
 %if 0%{?fedora} < 42
     %{_prefix}/share/terminfo/g/ghostty
