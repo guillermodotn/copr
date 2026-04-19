@@ -1,16 +1,19 @@
 # https://github.com/sentriz/cliphist
 %global goipath         go.senan.xyz/cliphist
+%global forgeurl        https://github.com/sentriz/cliphist
 Version:                0.7.0
 
 %gometa
+
+%global archivename     cliphist-%{version}
 
 Name:           cliphist
 Release:        %autorelease
 Summary:        Wayland clipboard manager with support for multimedia
 
 License:        GPL-3.0-only
-URL:            https://github.com/sentriz/cliphist
-Source0:        https://github.com/sentriz/cliphist/archive/v%{version}/%{name}-%{version}.tar.gz
+URL:            %{forgeurl}
+Source0:        %{forgeurl}/archive/v%{version}/%{archivename}.tar.gz
 
 BuildRequires:  go-rpm-macros
 BuildRequires:  golang(go.etcd.io/bbolt)
@@ -27,7 +30,7 @@ and stores them in a local database, supporting text and images.}
 %description %{common_description}
 
 %prep
-%goprep
+%goprep -k
 
 %build
 %gobuild -o %{gobuilddir}/bin/%{name} %{goipath}
