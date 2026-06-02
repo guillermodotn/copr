@@ -6,7 +6,7 @@
 
 Name:           himalaya
 Version:        1.2.0
-Release:        1%{?dist}
+Release:        %autorelease
 Summary:        CLI to manage emails
 
 # himalaya itself is MIT.
@@ -14,7 +14,7 @@ Summary:        CLI to manage emails
 License:        MIT AND Apache-2.0 AND BSD-2-Clause AND BSD-3-Clause AND ISC AND Unicode-3.0 AND Zlib
 URL:            https://github.com/pimalaya/himalaya
 Source0:        %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
-# Generated with: cargo vendor --locked
+# Vendored Rust dependencies, generated with: cargo vendor --locked
 # See vendor-tarball.sh for instructions
 Source1:        %{name}-%{version}-vendor.tar.gz
 
@@ -85,9 +85,4 @@ cargo test --release --locked \
 %{_bindir}/himalaya
 
 %changelog
-* Mon Jun 02 2026 guillermodotn <guillerm0.n@outlook.es> - 1.2.0-1
-- Switch to vendored dependencies for Copr builds
-- Remove rust-toolchain.toml (edition2024 crates need Rust >= 1.85)
-
-* Sat May 31 2026 guillermodotn <guillerm0.n@outlook.es> - 1.2.0-1
-- Initial package with oauth2 feature enabled
+%autochangelog
