@@ -1,5 +1,9 @@
 %bcond_without check
 
+# Disable cargo-rpm-macros automatic behavior
+%undefine __cargo_is_lib
+%undefine crates_source
+
 Name:           himalaya
 Version:        1.2.0
 Release:        1%{?dist}
@@ -33,7 +37,7 @@ Provides:       bundled(crate(secret-lib)) = 1.0.0
 Provides:       bundled(crate(shellexpand-utils)) = 0.2.1
 Provides:       bundled(crate(ariadne)) = 0.2.0
 
-ExclusiveArch:  %{rust_arches}
+ExcludeArch:    %{ix86}
 
 %description
 Himalaya is a CLI to manage emails.
@@ -43,10 +47,11 @@ multi-account configuration, PGP via shell commands, and OAuth 2.0
 authentication.
 
 %prep
-%autosetup -n %{name}-%{version} -p1
+%setup -q -n %{name}-%{version}
 # Extract vendored dependencies
 tar xf %{SOURCE1} --strip-components=1
-# Use vendored sources
+# Set up cargo to use vendored sources
+rm -rf .cargo
 mkdir -p .cargo
 cat > .cargo/config.toml <<'EOF'
 [source.crates-io]
