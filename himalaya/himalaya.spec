@@ -14,12 +14,12 @@ Summary:        CLI to manage emails
 License:        MIT AND Apache-2.0 AND BSD-2-Clause AND BSD-3-Clause AND ISC AND Unicode-3.0 AND Zlib
 URL:            https://github.com/pimalaya/himalaya
 Source0:        %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
-# Generated with: cargo vendor
+# Generated with: cargo vendor --locked
 # See vendor-tarball.sh for instructions
 Source1:        %{name}-%{version}-vendor.tar.gz
 
-BuildRequires:  rust
-BuildRequires:  cargo
+BuildRequires:  rust >= 1.85
+BuildRequires:  cargo >= 1.85
 BuildRequires:  gcc
 BuildRequires:  openssl-devel
 BuildRequires:  pkg-config
@@ -48,6 +48,9 @@ authentication.
 
 %prep
 %setup -q -n %{name}-%{version}
+# Remove upstream rust-toolchain.toml that pins Rust 1.82.0
+# (some vendored crates require edition2024 which needs >= 1.85)
+rm -f rust-toolchain.toml
 # Extract vendored dependencies
 tar xf %{SOURCE1} --strip-components=1
 # Set up cargo to use vendored sources
@@ -63,7 +66,7 @@ EOF
 
 %build
 export CARGO_HOME="$PWD/.cargo"
-cargo build --release \
+cargo build --release --locked \
     --features imap,maildir,smtp,sendmail,wizard,pgp-commands,oauth2
 
 %install
@@ -72,7 +75,7 @@ install -Dpm 0755 target/release/%{name} %{buildroot}%{_bindir}/%{name}
 %if %{with check}
 %check
 export CARGO_HOME="$PWD/.cargo"
-cargo test --release \
+cargo test --release --locked \
     --features imap,maildir,smtp,sendmail,wizard,pgp-commands,oauth2
 %endif
 
@@ -84,6 +87,7 @@ cargo test --release \
 %changelog
 * Mon Jun 02 2026 guillermodotn <guillerm0.n@outlook.es> - 1.2.0-1
 - Switch to vendored dependencies for Copr builds
+- Remove rust-toolchain.toml (edition2024 crates need Rust >= 1.85)
 
 * Sat May 31 2026 guillermodotn <guillerm0.n@outlook.es> - 1.2.0-1
 - Initial package with oauth2 feature enabled
