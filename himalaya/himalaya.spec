@@ -5,11 +5,17 @@ Version:        1.2.0
 Release:        1%{?dist}
 Summary:        CLI to manage emails
 
-License:        MIT
+# himalaya itself is MIT.
+# Bundled dependencies have various licenses, see LICENSE.dependencies.
+License:        MIT AND Apache-2.0 AND BSD-2-Clause AND BSD-3-Clause AND ISC AND Unicode-3.0 AND Zlib
 URL:            https://github.com/pimalaya/himalaya
 Source0:        %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
+# Generated with: cargo vendor
+# See vendor-tarball.sh for instructions
+Source1:        %{name}-%{version}-vendor.tar.gz
 
-BuildRequires:  cargo-rpm-macros >= 24
+BuildRequires:  rust
+BuildRequires:  cargo
 BuildRequires:  gcc
 BuildRequires:  openssl-devel
 BuildRequires:  pkg-config
@@ -18,6 +24,14 @@ BuildRequires:  dbus-devel
 
 # oauth2 feature requires keyring which uses dbus at runtime
 Requires:       dbus-libs
+
+# Bundled dependencies (vendored Rust crates)
+Provides:       bundled(crate(email-lib)) = 0.27.0
+Provides:       bundled(crate(mml-lib)) = 1.0.14
+Provides:       bundled(crate(pimalaya-tui)) = 0.3.1
+Provides:       bundled(crate(secret-lib)) = 1.0.0
+Provides:       bundled(crate(shellexpand-utils)) = 0.2.1
+Provides:       bundled(crate(ariadne)) = 0.2.0
 
 ExclusiveArch:  %{rust_arches}
 
@@ -30,29 +44,41 @@ authentication.
 
 %prep
 %autosetup -n %{name}-%{version} -p1
-%cargo_prep
+# Extract vendored dependencies
+tar xf %{SOURCE1} --strip-components=1
+# Use vendored sources
+mkdir -p .cargo
+cat > .cargo/config.toml <<'EOF'
+[source.crates-io]
+replace-with = "vendored-sources"
 
-%generate_buildrequires
-%cargo_generate_buildrequires -f imap,maildir,smtp,sendmail,wizard,pgp-commands,oauth2
+[source.vendored-sources]
+directory = "vendor"
+EOF
 
 %build
-%cargo_build -f imap,maildir,smtp,sendmail,wizard,pgp-commands,oauth2
-%{cargo_license_summary}
-%{cargo_license} > LICENSE.dependencies
+export CARGO_HOME="$PWD/.cargo"
+cargo build --release \
+    --features imap,maildir,smtp,sendmail,wizard,pgp-commands,oauth2
 
 %install
-%cargo_install -f imap,maildir,smtp,sendmail,wizard,pgp-commands,oauth2
+install -Dpm 0755 target/release/%{name} %{buildroot}%{_bindir}/%{name}
 
 %if %{with check}
 %check
-%cargo_test -f imap,maildir,smtp,sendmail,wizard,pgp-commands,oauth2
+export CARGO_HOME="$PWD/.cargo"
+cargo test --release \
+    --features imap,maildir,smtp,sendmail,wizard,pgp-commands,oauth2
 %endif
 
 %files
-%license LICENSE LICENSE.dependencies
+%license LICENSE
 %doc README.md CHANGELOG.md config.sample.toml
 %{_bindir}/himalaya
 
 %changelog
+* Mon Jun 02 2026 guillermodotn <guillerm0.n@outlook.es> - 1.2.0-1
+- Switch to vendored dependencies for Copr builds
+
 * Sat May 31 2026 guillermodotn <guillerm0.n@outlook.es> - 1.2.0-1
 - Initial package with oauth2 feature enabled
