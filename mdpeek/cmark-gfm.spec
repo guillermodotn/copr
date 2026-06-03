@@ -1,6 +1,6 @@
 Name:           cmark-gfm
 Version:        0.29.0.gfm.13
-Release:        1%{?dist}
+Release:        %autorelease
 Summary:        GitHub's fork of cmark, a CommonMark parsing and rendering library
 
 License:        BSD-2-Clause AND MIT
@@ -40,7 +40,8 @@ applications that use cmark-gfm.
 %cmake \
     -DCMARK_TESTS=OFF \
     -DCMARK_SHARED=ON \
-    -DCMARK_STATIC=ON
+    -DCMARK_STATIC=ON \
+    -DCMAKE_POLICY_VERSION_MINIMUM=3.5
 %cmake_build
 
 %install
@@ -75,5 +76,4 @@ applications that use cmark-gfm.
 %{_mandir}/man3/cmark-gfm.3*
 
 %changelog
-* Wed Feb 25 2026 guillermodotn - 0.29.0.gfm.13-1
-- Initial package
+%autochangelog
