@@ -12,6 +12,12 @@ Source1:        zen-browser.desktop
 
 ExclusiveArch:  x86_64
 
+# Skip RPATH checks — bundled pre-built libraries have non-standard RPATHs
+%define         __brp_check_rpaths %{nil}
+
+# Disable debug package — pre-built binaries have no debug info
+%global         debug_package %{nil}
+
 # Disable automatic dependency detection — the tarball bundles its own libs
 AutoReqProv:    no
 
