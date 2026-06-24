@@ -10,6 +10,7 @@ Source0:        %{pypi_source dotbot}
 BuildArch:      noarch
 
 BuildRequires:  python3-devel
+BuildRequires:  python3-pytest
 
 %global _description %{expand:
 Dotbot makes installing your dotfiles as easy as
@@ -38,10 +39,8 @@ Summary:        %{summary}
 %pyproject_install
 %pyproject_save_files -l dotbot
 
-# Tests require a real home directory, filesystem symlink operations,
-# and git, which are not available in the mock build environment.
-# %%check
-# %%pytest
+%check
+%pytest
 
 %files -n python3-dotbot -f %{pyproject_files}
 %doc README.md
