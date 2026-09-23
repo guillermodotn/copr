@@ -1,7 +1,7 @@
 %global install_dir /opt/zen-browser
 
 Name:           zen-browser
-Version:        1.20.2b
+Version:        1.22.3b
 Release:        1%{?dist}
 Summary:        Firefox-based browser focused on privacy and productivity
 
